@@ -42,6 +42,22 @@ pluginManagement {
 //            isAllowInsecureProtocol = true
 //            url = uri("http://192.168.10.60:8081/nexus/repository/composeDev/")
 //        }
+        maven {
+            isAllowInsecureProtocol = true
+            url = uri("https://maven.aliyun.com/repository/central")
+        }
+        maven {
+            isAllowInsecureProtocol = true
+            url = uri("https://maven.aliyun.com/repository/public")
+        }
+        maven {
+            isAllowInsecureProtocol = true
+            url = uri("https://maven.aliyun.com/repository/gradle-plugin")
+        }
+        maven {
+            isAllowInsecureProtocol = true
+            url = uri("https://plugins.gradle.org/m2/")
+        }
         google {
             mavenContent {
                 includeGroupAndSubgroups("androidx")
@@ -91,10 +107,22 @@ dependencyResolutionManagement {
 //            isAllowInsecureProtocol = true
 //            url = uri("http://192.168.10.60:8081/nexus/repository/tencent-maven/")
 //        }
-//        maven {
-//            isAllowInsecureProtocol = true
-//            url = uri("http://192.168.10.60:8081/nexus/repository/composeDev/")
-//        }
+        maven {
+            isAllowInsecureProtocol = true
+            url = uri("https://maven.aliyun.com/repository/central")
+        }
+        maven {
+            isAllowInsecureProtocol = true
+            url = uri("https://maven.aliyun.com/repository/public")
+        }
+        maven {
+            isAllowInsecureProtocol = true
+            url = uri("https://maven.aliyun.com/repository/gradle-plugin")
+        }
+        maven {
+            isAllowInsecureProtocol = true
+            url = uri("https://plugins.gradle.org/m2/")
+        }
         google {
             mavenContent {
                 includeGroupAndSubgroups("androidx")

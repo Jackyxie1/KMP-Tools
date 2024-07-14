@@ -14,7 +14,16 @@ import javax.swing.text.Highlighter.Highlight
 val HighlightColor = Color(0xFFFA9C18)
 
 @Stable
-val PressBtnColor = Color(0x19FA9C18)
+val TextColor = Color(0xFFFFFFFF)
 
 @Stable
-val NormalBtnColor = Color(0x0FFFFFFF)
+val PressBtnColor = Color(0x7FFA9C18)
+
+@Stable
+val NormalBtnColor = Color(0xFFFA9C18)
+
+@Stable
+val BackgroundColor = Color(0xFF1A1A1A)
+
+@Stable
+val TabNormalBackgroundColor = Color(0x19FFFFFF)

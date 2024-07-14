@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
+//    alias(libs.plugins.open.javafx)
 }
 
 kotlin {
@@ -36,20 +37,27 @@ kotlin {
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
+            implementation(libs.viewModelCompose)
+            implementation(libs.kotlinx.coroutines.swing)
+//            implementation(libs.kotlinx.coroutines.javafx)
+            implementation(libs.vlcj)
         }
     }
 }
 
-tasks.register<Copy>("copyNativeLib") {
-    dependsOn(":native-lib:linkReleaseSharedNative")
-    println("Copying native library to desktopJar...")
-    from(
-        project(":native-lib").layout.buildDirectory.get().asFile.resolve("bin/native/releaseShared")
-            .apply {
-                println("from $this")
-            })
-    into(layout.buildDirectory.dir("libs"))
-    include("**/*.dll")
+val osName = System.getProperty("os.name").lowercase()
+if (osName.contains("windows")) {
+    tasks.register<Copy>("copyNativeLib") {
+        dependsOn(":native-lib:linkReleaseSharedNative")
+        println("Copying native library to desktopJar...")
+        from(
+            project(":native-lib").layout.buildDirectory.get().asFile.resolve("bin/native/releaseShared")
+                .apply {
+                    println("from $this")
+                })
+        into(layout.buildDirectory.dir("libs"))
+        include("**/*.dll")
+    }
 }
 
 android {
@@ -100,22 +108,29 @@ compose.desktop {
         }
     }
 
-    afterEvaluate {
-        // 此处为了将 native 库同 msi、exe 一起打包，否则找不到相关的 native 库
-        tasks.getByName("createRuntimeImage") {
-            dependsOn("copyNativeLib")
-            doLast {
-                val dllFile = project.layout.buildDirectory.dir("libs").get().asFile.listFiles()
-                println("dllFile: $dllFile")
-                // 移动 dll 文件到 /compose/tmp/main/runtime/bin
-                dllFile?.forEach {
-                    println("file: $it")
-                    it.copyTo(
-                        project.layout.buildDirectory.dir("compose/tmp/main/runtime/bin")
-                            .get().asFile.resolve(it.name), true
-                    )
+    if (osName.contains("windows")) {
+        afterEvaluate {
+            // 此处为了将 native 库同 msi、exe 一起打包，否则找不到相关的 native 库
+            tasks.getByName("createRuntimeImage") {
+                dependsOn("copyNativeLib")
+                doLast {
+                    val dllFile = project.layout.buildDirectory.dir("libs").get().asFile.listFiles()
+                    println("dllFile: $dllFile")
+                    // 移动 dll 文件到 /compose/tmp/main/runtime/bin
+                    dllFile?.forEach {
+                        println("file: $it")
+                        it.copyTo(
+                            project.layout.buildDirectory.dir("compose/tmp/main/runtime/bin")
+                                .get().asFile.resolve(it.name), true
+                        )
+                    }
                 }
             }
         }
     }
 }
+
+//javafx {
+//    version = "19"
+//    modules("javafx.media", "javafx.swing")
+//}
