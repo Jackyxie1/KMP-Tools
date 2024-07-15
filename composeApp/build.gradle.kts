@@ -107,7 +107,7 @@ compose.desktop {
             packageName = "IQ Tools"
             packageVersion = "1.0.1"
 
-            appResourcesRootDir.set(layout.projectDirectory.dir("src/desktopMain/resources"))
+            appResourcesRootDir.set(layout.projectDirectory.dir("src/desktopMain/appResources"))
             windows {
                 this.upgradeUuid = UUID.randomUUID().toString()
             }

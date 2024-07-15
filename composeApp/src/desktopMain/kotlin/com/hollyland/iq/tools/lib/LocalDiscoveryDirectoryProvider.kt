@@ -21,8 +21,12 @@ class TestDiscoveryDirectoryProvider : DiscoveryDirectoryProvider {
             Arch.AARCH64 -> "arm64"
         }
 
-        val libs = File(System.getProperty("user.dir")).resolve("../appResources/${os}-${arch}/lib")
-        if (!libs.exists()) return emptyArray()
+        val libs = File(System.getProperty("user.dir")).resolve("src/desktopMain/appResources/${os}-${arch}/lib")
+        println("============ TestDiscoveryDirectoryProvider: directories path: ${libs.absolutePath}")
+        if (!libs.exists()) {
+            println("============ TestDiscoveryDirectoryProvider: directories path: not exists")
+            return emptyArray()
+        }
         return arrayOf(libs.absolutePath)
     }
 
@@ -41,8 +45,11 @@ class ComposeResourcesDiscoveryDirectoryProvider : DiscoveryDirectoryProvider {
     override fun priority(): Int = DiscoveryProviderPriority.USER_DIR
 
     override fun directories(): Array<String> {
+        println("============ ComposeResourcesDiscoveryDirectoryProvider: directories")
         val path = System.getProperty("compose.application.resources.dir") ?: return emptyArray()
         val libs = File(path).resolve("lib")
+
+        println("============ ComposeResourcesDiscoveryDirectoryProvider: directories path: $path")
         if (!libs.exists()) return emptyArray()
         return arrayOf(libs.absolutePath)
     }
