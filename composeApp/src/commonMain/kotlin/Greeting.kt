@@ -1,5 +1,5 @@
 class Greeting {
-    private val platform = getPlatform()
+    private val platform = currentPlatform
 
     fun greet(): String {
         return "Hello, ${platform.name}!"

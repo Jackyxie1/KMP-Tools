@@ -19,6 +19,8 @@ coroutine-gui = "1.8.1"
 javafx = "0.1.0"
 javafxVersion = "19"
 vlcj = "4.8.2"
+log4j-core = "2.20.0"
+slf4j = "2.0.12"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -36,6 +38,11 @@ viewModelCompose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmo
 kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "coroutine-gui" }
 kotlinx-coroutines-javafx = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-javafx", version.ref = "coroutine-gui" }
 vlcj = { module = "uk.co.caprica:vlcj", version.ref = "vlcj" }
+
+log4j-core = { module = "org.apache.logging.log4j:log4j-core", version.ref = "log4j-core" }
+log4j-slf4j-impl = { module = "org.apache.logging.log4j:log4j-slf4j2-impl", version.ref = "log4j-core" }
+slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
+slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

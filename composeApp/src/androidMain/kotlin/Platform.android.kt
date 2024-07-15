@@ -1,7 +1,6 @@
-import android.os.Build
+import androidx.compose.runtime.Stable
 
-class AndroidPlatform : Platform {
-    override val name: String = "Android ${Build.VERSION.SDK_INT}"
+@Stable
+actual fun Platform.Companion.currentPlatformImpl(): Platform {
+    TODO("Not yet implemented")
 }
-
-actual fun getPlatform(): Platform = AndroidPlatform()

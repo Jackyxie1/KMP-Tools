@@ -1,6 +1,7 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.UUID
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -105,7 +106,14 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb, TargetFormat.Exe)
             packageName = "IQ Tools"
             packageVersion = "1.0.1"
+
+            appResourcesRootDir.set(layout.projectDirectory.dir("src/desktopMain/resources"))
+            windows {
+                this.upgradeUuid = UUID.randomUUID().toString()
+            }
         }
+
+
     }
 
     if (osName.contains("windows")) {

@@ -1,7 +1,22 @@
-import com.hollyland.iq.tools.NativeLib
+import androidx.compose.runtime.Stable
 
-class JVMPlatform: Platform {
-    override val name: String = "Java ${System.getProperty("java.version")} Native ${NativeLib().nativeFunction()}"
+@Stable
+actual fun Platform.Companion.currentPlatformImpl(): Platform {
+    val os = System.getProperty("os.name")?.lowercase()
+        ?: error("Cannot determine platform, 'os.name' is null.")
+    val arch = getArch()
+    return when {
+        "mac" in os || "os x" in os || "darwin" in os -> Platform.MacOS(arch)
+        "windows" in os -> Platform.Windows(arch)
+        "linux" in os || "redhat" in os || "debian" in os || "ubuntu" in os -> Platform.Linux(arch)
+        else -> error("Unsupported platform: $os")
+    }
 }
 
-actual fun getPlatform(): Platform = JVMPlatform()
+private fun getArch() = System.getProperty("os.arch").lowercase().let {
+    when {
+        "x86" in it || "x64" in it || "amd64" in it -> Arch.X86_64
+        "arm" in it || "aarch" in it -> Arch.AARCH64
+        else -> Arch.X86_64
+    }
+}
